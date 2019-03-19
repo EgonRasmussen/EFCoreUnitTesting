@@ -20,10 +20,18 @@ namespace UnitTestDemo
         [TestMethod]
         public void Add_writes_to_database()
         {
-            // ARRANGE: Create option object with InMemoryDatabase
+            // ARRANGE: Create option object with SQL server
             var options = new DbContextOptionsBuilder<BloggingContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+            //  .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = BloggingDb; Trusted_Connection = True;")
                 .Options;
+
+            // ARRANGE: Empty new DB
+            using (var context = new BloggingContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
 
             // ACT: Run the test against one instance of the context
             using (var context = new BloggingContext(options))
@@ -44,7 +52,8 @@ namespace UnitTestDemo
         public void Find_searches_url()
         {
             var options = new DbContextOptionsBuilder<BloggingContext>()
-                .UseInMemoryDatabase(databaseName: "Find_searches_url")
+                //.UseInMemoryDatabase(databaseName: "Find_searches_url")
+                .UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = BloggingDb; Trusted_Connection = True;")
                 .Options;
 
             // Insert seed data into the database using one instance of the context
