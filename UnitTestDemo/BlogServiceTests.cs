@@ -1,3 +1,4 @@
+// Denne branch demonstrer Unit Test af hovedsageligt DataLayer, eftersom databasen er den rigtige SQL server.
 // Projekt af typen MSTest
 // Tilføj NuGet pakken: Microsoft.EntityFrameworkCore.InMemory til projektet med Contexten
 // Husk forhindre contexten i at benytte SQL server konfigurationen.
